@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.example.passwordsupport.R;
 import com.example.passwordsupport.mvp.presenter.MainActivityPresenter;
 import com.example.passwordsupport.mvp.view.MainActivityView;
@@ -27,8 +26,12 @@ public class MainActivity extends MvpActivity implements MainActivityView {
     private View mCopyButton;
     private ImageView mQuality;
     private TextView mQualityTextView;
-
     private CompoundButton mUseUppercase;
+    private CompoundButton mUseNumerals;
+    private CompoundButton mUseSpecialCharacters;
+    private View mCopyButtonRandomPassword;
+    private TextView mResaultRandomPasswordTextView;
+    private View mGeneratePasswoedButton;
 
     @InjectPresenter
     MainActivityPresenter presenter;
@@ -39,8 +42,7 @@ public class MainActivity extends MvpActivity implements MainActivityView {
         setContentView(R.layout.activity_main);
         initUI();
         initListeners();
-        presenter.pPrepareArraysOfAlphabet(getResources().getStringArray(R.array.russian),
-                getResources().getStringArray(R.array.english));
+        initData();
     }
 
     public void initUI(){
@@ -50,6 +52,11 @@ public class MainActivity extends MvpActivity implements MainActivityView {
         mQuality = findViewById(R.id.quality);
         mQualityTextView = findViewById(R.id.quality_text);
         mUseUppercase = findViewById(R.id.check_uppercase);
+        mUseNumerals = findViewById(R.id.check_numerals);
+        mUseSpecialCharacters = findViewById(R.id.check_special_characters);
+        mCopyButtonRandomPassword = findViewById(R.id.button_copy_random_password);
+        mResaultRandomPasswordTextView = findViewById(R.id.result_text_random_password);
+        mGeneratePasswoedButton = findViewById(R.id.button_generate_password);
         mCopyButton.setEnabled(false);
     }
 
@@ -57,12 +64,7 @@ public class MainActivity extends MvpActivity implements MainActivityView {
         mCopyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ClipboardManager manager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                manager.setPrimaryClip(ClipData.newPlainText(
-                        MainActivity.this.getString(R.string.clipboard_title),
-                        mResultTextView.getText()
-                ));
-                toastMakeText(R.string.message_copied);
+                setClip(mResultTextView);
             }
         });
 
@@ -86,10 +88,55 @@ public class MainActivity extends MvpActivity implements MainActivityView {
 
             }
         });
+
+        mCopyButtonRandomPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setClip(mResaultRandomPasswordTextView);
+            }
+        });
+
+        mGeneratePasswoedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.onClickGeneratePassword();
+            }
+        });
+    }
+
+    public void initData() {
+        presenter.pPrepareArraysOfAlphabet(getResources().getStringArray(R.array.russian),
+                getResources().getStringArray(R.array.english));
     }
 
     @Override
     public void toastMakeText(int stringRes) {
         Toast.makeText(this,stringRes,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void getCheckBoxStatus() {
+        presenter.pGetCheckBoxStatus(mUseUppercase.isChecked(), mUseNumerals.isChecked(),
+                mUseSpecialCharacters.isChecked());
+    }
+
+    @Override
+    public void setRandomPassword(CharSequence charSequence) {
+        mResaultRandomPasswordTextView.setText(charSequence);
+    }
+
+    @Override
+    public void prepareArraysForGenerator() {
+        presenter.pPrepareArraysForPasswordRandom(getResources().getStringArray(R.array.charcters),
+                getResources().getStringArray(R.array.SpecialCharacters));
+    }
+
+    public void setClip(TextView textView) {
+        ClipboardManager manager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        manager.setPrimaryClip(ClipData.newPlainText(
+                MainActivity.this.getString(R.string.clipboard_title),
+                textView.getText()
+        ));
+        toastMakeText(R.string.message_copied);
     }
 }

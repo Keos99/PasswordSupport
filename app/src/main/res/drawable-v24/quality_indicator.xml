@@ -11,13 +11,13 @@
 
         <item android:minLevel="4000" android:maxLevel="7999">
             <shape>
-                <solid android:color="#FFC107" />
+                <solid android:color="@color/normal_password" />
             </shape>
         </item>
 
         <item android:minLevel="8000" android:maxLevel="10000">
             <shape>
-                <solid android:color="#4CAF50" />
+                <solid android:color="@color/good_password" />
             </shape>
         </item>
 

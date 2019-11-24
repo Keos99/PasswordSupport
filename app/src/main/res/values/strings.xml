@@ -6,6 +6,11 @@
 
     <string name="quality_hint">(качество)</string>
     <string name="check_uppercase">Заглавные</string>
+    <string name="generate_random_password">Сгенерировать новый пароль</string>
+    <string name="check_numeral">Цифры</string>
+    <string name="check_special_characters">Спец символы</string>
+    <string name="button_copy">Копировать</string>
+    <string name="password_quality">Качество пароля</string>
 
     <string-array name="qualities">
         <item>@string/quality_hint</item>
@@ -56,7 +61,6 @@
         <item>б</item>
         <item>ю</item>
         <item>.</item>
-
     </string-array>
 
     <string-array name="english">
@@ -94,6 +98,42 @@
         <item>,</item>
         <item>.</item>
         <item>/</item>
+    </string-array>
 
+    <string-array name="charcters">
+        <item>q</item>
+        <item>w</item>
+        <item>e</item>
+        <item>r</item>
+        <item>t</item>
+        <item>y</item>
+        <item>u</item>
+        <item>i</item>
+        <item>o</item>
+        <item>p</item>
+        <item>a</item>
+        <item>s</item>
+        <item>d</item>
+        <item>f</item>
+        <item>g</item>
+        <item>h</item>
+        <item>j</item>
+        <item>k</item>
+        <item>l</item>
+        <item>z</item>
+        <item>x</item>
+        <item>c</item>
+        <item>v</item>
+        <item>b</item>
+        <item>n</item>
+        <item>m</item>
+    </string-array>
+
+    <string-array name="SpecialCharacters">
+        <item>#</item>
+        <item>$</item>
+        <item>%</item>
+        <item>&amp;</item>
+        <item>*</item>
     </string-array>
 </resources>
